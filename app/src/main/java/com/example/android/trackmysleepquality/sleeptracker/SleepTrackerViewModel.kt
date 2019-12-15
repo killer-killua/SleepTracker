@@ -17,9 +17,6 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
-import android.provider.SyncStateContract.Helpers.insert
-import android.provider.SyncStateContract.Helpers.update
-import android.text.method.TextKeyListener.clear
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -54,9 +51,9 @@ class SleepTrackerViewModel(
 
     }
 
-    private val navigateToSleepQaulity = MutableLiveData<SleepNight>()
+    private val _navigateToSleepQaulity = MutableLiveData<SleepNight>()
 
-    val _navigateToSleepQaulity: LiveData<SleepNight>
+    val navigateToSleepQaulity: LiveData<SleepNight>
         get() = _navigateToSleepQaulity
 
     fun doneNavigating() {
@@ -65,10 +62,10 @@ class SleepTrackerViewModel(
 
 
     init {
-        intializeTonight()
+        initializeTonight()
     }
 
-    private fun intializeTonight(){
+    private fun initializeTonight(){
         uiScope.launch {
             tonight.value = getTonightFromDatabase()
         }
@@ -94,9 +91,7 @@ class SleepTrackerViewModel(
         uiScope.launch {
 
             val newNight = SleepNight()
-
             insert(newNight)
-
             tonight.value = getTonightFromDatabase()
 
         }
